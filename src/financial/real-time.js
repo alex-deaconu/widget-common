@@ -12,7 +12,7 @@ RiseVision.Common.Financial.RealTime = function(displayID, instruments, store_au
   this.conditions = {};
   this.collectionTimes = [];
   this.updateInterval = 60000;
-  this.now = Date.today();
+  this.now = moment(0, "HH");
   //Issue 922
   this.url = "http://contentfinancial2.appspot.com/data?";
   this.logosURL = "https://s3.amazonaws.com/risecontentlogos/financial/";
@@ -65,8 +65,8 @@ RiseVision.Common.Financial.RealTime = function(displayID, instruments, store_au
         if (startTime && endTime && timeZoneOffset !== "N/P") {
           this.collectionTimes.push({
             "instrument" : this.instruments[row],
-            "startTime" : startTime.setTimezoneOffset(timeZoneOffset),
-            "endTime" : endTime.setTimezoneOffset(timeZoneOffset),
+            "startTime" : moment(startTime).zone(timeZoneOffset),
+            "endTime" : moment(endTime).zone(timeZoneOffset),
             "daysOfWeek" : this.data.getFormattedValue(row, this.startTimeIndex + 2).split(",")
           });
         }
@@ -135,12 +135,12 @@ RiseVision.Common.Financial.RealTime.prototype.getData = function(fields, loadLo
   queryString += ", startTime, endTime, daysOfWeek, timeZoneOffset";
 
   //Issue 922 Start
-  if (!Date.equals(Date.today(), this.now)) {
-    this.now = Date.today();
+  if (!moment(0, "HH").isSame(this.now)) {
+    this.now = moment(0, "HH");
 
     for (var i = 0; i < this.collectionTimes.length; i++) {
-      this.collectionTimes[i].startTime.addDays(1);
-      this.collectionTimes[i].endTime.addDays(1);
+      this.collectionTimes[i].startTime.add(1, "day");
+      this.collectionTimes[i].endTime.add(1, "day");
     }
   }
   //Issue 922 End

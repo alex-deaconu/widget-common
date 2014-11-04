@@ -55,8 +55,8 @@ var CollectionTimes = (function() {
 
             instruments[i].collectionTimes = {
               "instrument" : instrument,
-              "startTime" : startTime.setTimezoneOffset(timeZoneOffset),
-              "endTime" : endTime.setTimezoneOffset(timeZoneOffset),
+              "startTime" : startTime.zone(timeZoneOffset),
+              "endTime" : endTime.zone(timeZoneOffset),
               "daysOfWeek" : data.getFormattedValue(0, 2).split(","),
               "timeZoneOffset" : timeZoneOffset,
               "isUpdated" : true
@@ -86,8 +86,8 @@ var CollectionTimes = (function() {
           if (instruments[i].instrument === instrument) {
             //Issue 922 Start
             if (instruments[i].collectionTimes !== null) {
-              if ((!Date.equals(Date.today(), now)) && (!instruments[i].collectionTimes.isUpdated)) {
-                now = Date.today();
+              if ((!moment(0, "HH").isSame(now)) && (!instruments[i].collectionTimes.isUpdated)) {
+                now = moment(0, "HH");
                 instruments[i].collectionTimes.startTime.addDays(1);
                 instruments[i].collectionTimes.endTime.addDays(1);
                 instruments[i].collectionTimes.isUpdated = true;

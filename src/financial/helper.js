@@ -19,7 +19,7 @@ RiseVision.Common.Financial.Helper.prototype.getInstruments = function(isLoading
     return this.instruments.join("|");
   }
   else {
-    var dayOfWeek = new Date().getDay(), len = collectionTimes.length, instruments = [];
+    var dayOfWeek = moment().weekday(), len = collectionTimes.length, instruments = [];
 
     $.each(this.instruments, function(i, instrument) {
       for (var j = 0; j < len; j++) {
@@ -32,7 +32,7 @@ RiseVision.Common.Financial.Helper.prototype.getInstruments = function(isLoading
             // TODO: Use strict type comparison (===)
             if (day == dayOfWeek) {
               //Check collection time.
-              if (new Date().between(startTime, endTime)) {
+              if (moment().isAfter(startTime) && moment().isBefore(endTime)) {
                 instruments.push(self.instruments[i]);
               }
 

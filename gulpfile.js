@@ -98,7 +98,7 @@
   gulp.task("test:unit", factory.testUnitAngular(
     {testFiles: [
       "components/jquery/dist/jquery.min.js",
-      "test/date.js",
+      "components/moment/moment.js",
       "test/financial-data.js",
       "node_modules/widget-tester/mocks/visualization-api-mock.js",
       "test/ajax-mock.js",

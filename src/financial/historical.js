@@ -19,7 +19,7 @@ RiseVision.Common.Financial.Historical = function(displayID, instrument, duratio
   this.duration = duration;
   this.isLoading = true;
   this.updateInterval = 60000;
-  this.now = Date.today();
+  this.now = moment(0, "HH");
   //Issue 922
   this.url = "http://contentfinancial2.appspot.com/data/historical?";
   this.historicalViz = new RiseVision.Common.Visualization();
